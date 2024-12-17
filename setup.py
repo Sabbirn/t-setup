@@ -19,11 +19,12 @@ def print_banner():
     print("\033[1;37m")  # Resetting the color
     
     # Add author's name at the bottom of the banner
-    print("\033[1;36m")  # Set the color for the author's name
+    print("\033[1;36m")  # Cyan color for the author's name
     print(center_text(author_text))  # Center the author's name
     print("\033[1;37m")  # Resetting the color
 
 def install_packages():
+    # List of commands to execute
     commands = [
         "apt update",
         "apt upgrade -y",
@@ -45,20 +46,20 @@ def install_packages():
         "apt install openssh -y",
         "apt install wget -y",
         "apt install curl -y",
-        "apt install proof -y",
         "termux-setup-storage",
         "git clone https://github.com/Sabbirn/termux-banner.git",
-        "cd termux-banner",
-        "clear",
-        "ls",
-        "bash t-header.sh",
+        "cd termux-banner && clear && ls && bash t-header.sh",
         "exit"
     ]
 
+    # Execute commands sequentially
     for command in commands:
         print(f"Running: {command}")
-        os.system(command)
+        status = os.system(command)
+        if status != 0:
+            print(f"Command failed: {command}")
+            break  # Exit if any command fails
 
-if name == "main":
+if __name__ == "__main__":
     print_banner()  # Display the banner
     install_packages()
